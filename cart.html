@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/booklogo.png" type="image/icon type">
+    <title>Watty's Bookstore</title>
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+        <div class="container">
+          <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="#header">
+            <img src="images/booklogo.png" alt="site icon">
+            <span class="text-uppercase fw-lighter ms-2">Watty Bookstore</span>
+          </a>
+      
+          <div class="order-lg-2 nav-btns">
+            <a href="cart.html">
+                <button type="button" class="btn position-relative">
+                  <i class="fa fa-shopping-cart"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
+                </button>
+                </a>
+            <button type="button" class="btn position-relative">
+              <i class="fa fa-heart"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">2</span>
+            </button>
+            <button type="button" class="btn position-relative">
+              <i class="fa fa-search"></i>
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+      
+          <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse order-lg-1" id="navMenu">
+            <ul class="navbar-nav mx-auto text-center">
+              <li class="nav-item px-2">
+                <a class="nav-link text-uppercase text-dark" href="index.html">home</a>
+              </li>
+              <li class="nav-item px-2">
+                <a class="nav-link text-uppercase text-dark" href="#collection">collection</a>
+              </li>
+              <li class="nav-item px-2">
+                <a class="nav-link text-uppercase text-dark" href="#special">specials</a>
+              </li>
+              <li class="nav-item px-2">
+                <a class="nav-link text-uppercase text-dark" href="#blogs">blogs</a>
+              </li>
+              <li class="nav-item px-2">
+                <a class="nav-link text-uppercase text-dark" href="#about">about us</a>
+              </li>
+              <li class="nav-item px-2 border-0">
+                <a class="nav-link text-uppercase text-dark" href="#popular">popular</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    <!-- end of navbar -->
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Add to Cart</h1>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Cart Summary</h2>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="cart-items">
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th colspan="4">Subtotal:</th>
+                    <td id="subtotal">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th colspan="4">Tax:</th>
+                    <td id="tax">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th colspan="4">Total:</th>
+                    <td id="total">$0.00</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        function addToCart() {
+          // get product details
+          const productName = document.querySelector('.card-title').textContent;
+          const productPrice = document.querySelector('.card-text').textContent;
+          const productQuantity = document.querySelector('#quantity').value;
+      
+          // create cart item element
+          const cartItem = document.createElement('tr');
+          cartItem.innerHTML = `
+            <td><img src="images/peculiar1.jpg" alt="${productName}"></td>
+            <td>${productName}</td>
+            <td>${productPrice}</td>
+            <td>${productQuantity}</td>
+            <td>$${(parseFloat(productPrice.slice(1)) * productQuantity).toFixed(2)}</td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(event)">Remove</button></td>
+          `;
+      
+          // add cart item element to cart
+          const cartItems = document.querySelector('#cart-items');
+          cartItems.appendChild(cartItem);
+      
+          // update cart totals
+          updateCartTotals();
+        }
+      
+        function removeItem(event) {
+          const row = event.target.parentElement.parentElement;
+          row.remove();
+      
+          // update cart totals
+          updateCartTotals();
+        }
+      
+        function updateCartTotals() {
+          const cartItems = document.querySelectorAll('#cart-items tr');
+      
+          let subtotal = 0;
+          cartItems.forEach((cartItem) => {
+            const quantity = parseInt(cartItem.querySelector('td:nth-child(4)').textContent);
+            const price = parseFloat(cartItem.querySelector('td:nth-child(3)').textContent.slice(1));
+            const total = quantity * price;
+            cartItem.querySelector('td:nth-child(5)').textContent = `$${total.toFixed(2)}`;
+            subtotal += total;
+          });
+      
+          const tax = (subtotal * 0.09);
+          const total = subtotal + tax;
+      
+          document.querySelector('#subtotal').textContent = `$${subtotal.toFixed(2)}`;
+          document.querySelector('#tax').textContent = `$${tax.toFixed(2)}`;
+          document.querySelector('#total').textContent = `$${total.toFixed(2)}`;
+        }
+      </script>
+      
+      
+      
+      
+
+    <!-- footer -->
+    <footer class="bg-dark py-5">
+        <div class="container">
+            <div class="row text-white g-4">
+                <div class="col-md-6 col-lg-3">
+                    <a class="text-uppercase text-decoration-none brand text-white" href="index.html">Attire</a>
+                    <p class="text-white text-muted mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum mollitia quisquam veniam odit cupiditate, ullam aut voluptas velit dolor ipsam?</p>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="fw-light">Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="my-3">
+                            <a href="#" class="text-white text-decoration-none text-muted">
+                                <i class="fas fa-chevron-right me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="my-3">
+                            <a href="#" class="text-white text-decoration-none text-muted">
+                                <i class="fas fa-chevron-right me-1"></i> Collection
+                            </a>
+                        </li>
+                        <li class="my-3">
+                            <a href="#" class="text-white text-decoration-none text-muted">
+                                <i class="fas fa-chevron-right me-1"></i> Blogs
+                            </a>
+                        </li>
+                        <li class="my-3">
+                            <a href="#" class="text-white text-decoration-none text-muted">
+                                <i class="fas fa-chevron-right me-1"></i> About Us
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="fw-light mb-3">Contact Us</h5>
+                    <div class="d-flex justify-content-start align-items-start my-2 text-muted">
+                        <span class="me-3">
+                            <i class = "fas fa-map-marked-alt"></i>
+                        </span>
+                        <span class="fw-light">
+                            Albert Street, New York, AS 756, United States of America
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-start align-items-start my-2 text-muted">
+                        <span class="me-3">
+                            <i class = "fas fa-envelope"></i>
+                        </span>
+                        <span class="fw-light">
+                            attire.support@gmail.com
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-start align-items-start my-2 text-muted">
+                        <span class="me-3">
+                            <i class = "fas fa-phone-alt"></i>
+                        </span>
+                        <span class="fw-light">
+                            +9786 6776 236
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="fw-light mb-3">Follow Us</h5>
+                    <div>
+                        <ul class="list-unstyled d-flex">
+                            <li>
+                                <a href="#" class="text-white text-decoration-none text-muted fs-4 me-4">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-white text-decoration-none text-muted fs-4 me-4">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-white text-decoration-none text-muted fs-4 me-4">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-white text-decoration-none text-muted fs-4 me-4">
+                                    <i class="fab fa-pinterest"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end of footer -->
+
+
+
+
+    <!-- jquery -->
+    <script src="js/jquery-3.6.0.js"></script>
+    <!-- isotope js -->
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <!-- bootstrap js -->
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+    <!-- custom js -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
