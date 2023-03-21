@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/booklogo.png" type="image/icon type">
     <title>Watty's Bookstore</title>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
@@ -91,55 +93,57 @@
 
     <!-- collection -->
     <section id="collection" class="py-5">
-        <div class="container my-5">
-          <div class="row">
-            <div class="col-md-9">
-              <div class="card mb-3">
-                <div class="row g-5">
-                  <div class="col-md-4">
-                    <img src="images/peculiar1.jpg" alt="Product image" height="250" width="250">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Product Name
-                        <button class="btn btn-primary float-end" onclick="addToCart()">Add to Cart</button>
-                      </h5>
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius, odio at sodales commodo, eros nunc egestas lectus, eu rhoncus nisi nulla sit amet elit.</p>
-                      <p class="card-text">$50.00</p>
-                      <label for="quantity" class="form-label">Quantity:</label>
-                      <input type="number" class="form-control mb-3" id="quantity" value="1">
+      <div class="container my-5">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="images/peculiar1.jpg" alt="Product image" height="300" width="290">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      Product Name
+                      <button class="btn btn-primary float-end" onclick="addToCart()">Add to Cart</button>
+                    </h5>
+                    <p class="card-text">$50.00</p>
+                    <div class="input-group mb-3">
+                      <label for="quantity" class="form-label me-3">Quantity:</label>
+                      <input type="number" class="form-control form-control-sm" id="quantity" value="1">
                     </div>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius, odio at sodales commodo, eros nunc egestas lectus, eu rhoncus nisi nulla sit amet elit.</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
       
       <script>
         function addToCart() {
-            // Get the product information
-            const productName = document.querySelector('.card-title').innerText;
-            const productPrice = document.querySelector('.card-text.price').innerText;
-            const productImage = document.querySelector('.card-img-top').src;
-            const quantity = document.querySelector('#quantity').value;
-          
-            // Add the product to the cart
-            const cartItem = `
-              <tr>
-                <td><img src="${productImage}" alt="${productName}" height="50"></td>
-                <td>${productName}</td>
-                <td>${productPrice}</td>
-                <td>${quantity}</td>
-                <td>${productPrice * quantity}</td>
-                <td><button type="button" class="btn btn-danger btn-sm">Remove</button></td>
-              </tr>
-            `;
-            document.querySelector('tbody').insertAdjacentHTML('beforeend', cartItem);
-          }
-          
+          // Get the product information
+          const productName = document.querySelector('.card-title').innerText;
+          const productPrice = document.querySelector('.card-text').innerText;
+          const productImage = document.querySelector('.card-img-top').src;
+          const quantity = document.querySelector('#quantity').value;
+        
+          // Add the product to the cart
+          const cartItem = `
+            <tr>
+              <td><img src="${productImage}" alt="${productName}" height="50"></td>
+              <td>${productName}</td>
+              <td>${productPrice}</td>
+              <td>${quantity}</td>
+              <td>${productPrice * quantity}</td>
+              <td><button type="button" class="btn btn-danger btn-sm">Remove</button></td>
+            </tr>
+          `;
+          document.querySelector('#cart-items').insertAdjacentHTML('beforeend', cartItem);
+        }
+        
       </script>
       
       
@@ -249,7 +253,6 @@
     <!-- isotope js -->
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     <!-- bootstrap js -->
-    <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <!-- custom js -->
     <script src="js/script.js"></script>
 </body>
